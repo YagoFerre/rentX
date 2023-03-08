@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { StatusBar } from 'react-native'
+import { StatusBar, BackHandler } from 'react-native'
 import {
   CarList,
   Container,
@@ -49,6 +49,12 @@ export function Home() {
     fetchCars()
   }, [])
 
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return true
+    })
+  }, [])
+
   return (
     <Container>
       <StatusBar
@@ -59,7 +65,9 @@ export function Home() {
       <Header>
         <HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          <TotalCars>Total de 12 carros</TotalCars>
+          <TotalCars>
+            {loading ? '' : `Total de ${cars.length} carros`}
+          </TotalCars>
         </HeaderContent>
       </Header>
 
